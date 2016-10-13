@@ -8,7 +8,7 @@ import { Cell } from '../../lib/data-set/cell';
   template: `
     <div *ngIf="!cell.getRow().isInEditing && cell.getColumn().type !== 'html'">{{ cell.getValue() }}</div>
     <div *ngIf="!cell.getRow().isInEditing && cell.getColumn().type === 'html'" [innerHTML]="cell.getValue()"></div>
-    <input *ngIf="cell.getRow().isInEditing" 
+    <input *ngIf="cell.getRow().isInEditing && gridmode !== 'ko'" 
       [ngClass]="inputClass"
       class="form-control"
       [(ngModel)]="cell.newValue"
@@ -18,10 +18,26 @@ import { Cell } from '../../lib/data-set/cell';
       (click)="onClick($event)"
       (keydown.enter)="onEdited($event)" 
       (keydown.esc)="onStopEditing()">
+
+    <div *ngIf="cell.getRow().isInEditing && gridmode === 'ko'">
+      <input *ngIf="cell.getColumn().isEditable" 
+        [ngClass]="inputClass"
+        class="form-control"
+        [(ngModel)]="cell.newValue"
+        [name]="cell.getColumn().id" 
+        [placeholder]="cell.getColumn().title"
+        [disabled]="!cell.getColumn().isEditable"
+        (click)="onClick($event)"
+        (keydown.enter)="onEdited($event)" 
+        (keydown.esc)="onStopEditing()">
+      <div *ngIf="!cell.getColumn().isEditable && cell.getColumn().type !== 'html'">{{ cell.getValue() }}</div>
+      <div *ngIf="!cell.getColumn().isEditable && cell.getColumn().type === 'html'" [innerHTML]="cell.getValue()"></div>
+    </div>
   `
 })
 export class CellComponent {
 
+  @Input() gridmode: string = '';
   @Input() cell: Cell;
   @Input() inputClass: string = '';
   @Input() mode: string = 'inline';
