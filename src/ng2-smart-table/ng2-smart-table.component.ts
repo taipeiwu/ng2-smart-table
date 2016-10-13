@@ -141,6 +141,11 @@ export class Ng2SmartTableComponent implements OnChanges {
         data: row.getData(),
         source: this.source
       });
+    } else if (this.grid.getSetting('mode') === 'ko') {
+      this.delete.emit({
+        data: row.getData(),
+        source: this.source
+      });
     } else {
       this.grid.delete(row, this.deleteConfirm);
     }
@@ -157,7 +162,14 @@ export class Ng2SmartTableComponent implements OnChanges {
   onSave(row: Row, event): boolean {
     event.stopPropagation();
 
-    this.grid.save(row, this.editConfirm);
+    if (this.grid.getSetting('mode') === 'ko') {
+      this.edit.emit({
+        data: row.getNewData(),
+        source: this.source
+      });
+    } else {
+      this.grid.save(row, this.editConfirm);
+    }
     return false;
   }
 
