@@ -1,16 +1,15 @@
 import { Component } from '@angular/core';
-import { CustomServerDataSource } from './serve.data-source';
-import { Http } from '@angular/http';
+import { ServerDataSource } from '../../../../../../src/ng2-smart-table/lib';
+import { Http } from '@angular/http/src/http';
 
 @Component({
-  selector: 'basic-example-data',
+  selector: 'advanced-example-server',
   styles: [],
-  providers: [CustomServerDataSource],
   template: `
     <ng2-smart-table [settings]="settings" [source]="source"></ng2-smart-table>
   `
 })
-export class BasicExampleDataComponent {
+export class AdvancedExampleServerComponent {
 
   settings = {
     columns: {
@@ -29,6 +28,9 @@ export class BasicExampleDataComponent {
     }
   };
 
-  constructor(protected source: CustomServerDataSource) {
+  source: ServerDataSource;
+  
+  constructor(http: Http) {
+    this.source = new ServerDataSource(http, {endPoint: 'https://jsonplaceholder.typicode.com/photos'});
   }
 }
