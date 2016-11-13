@@ -30,10 +30,8 @@ var Row = (function () {
     };
     Row.prototype.setInEditing = function (status) {
         var _this = this;
-        if (!status) {
-            console.log(this.getData());
+        if (!status)
             this.getCells().forEach(function (cell) { return cell.newValue = _this.data[cell.getColumn().id]; });
-        }
         this.isInEditing = status;
         return false;
     };
