@@ -104,7 +104,7 @@ export class DataSet {
 
   createNewRow(): void {
     this.newRow = new Row(0, {}, this);
-    this.newRow.isInEditing = true;
+    this.newRow.setInEditing(true);
   }
 
   /**

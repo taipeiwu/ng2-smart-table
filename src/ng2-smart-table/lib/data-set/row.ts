@@ -1,6 +1,7 @@
 import { Cell } from './cell';
 import { Column } from './column';
 import { DataSet } from './data-set';
+import { LocalDataSource } from '../data-source/local/local.data-source';
 
 export class Row {
 
@@ -9,7 +10,7 @@ export class Row {
   protected cells: Array<Cell> = [];
 
 
-  constructor(public index: number, protected data: any, protected _dataSet: DataSet) {
+  constructor(public index: number, protected data: any, protected _dataSet: DataSet, protected _localdatasource: LocalDataSource) {
     this.process();
   }
 
@@ -26,7 +27,7 @@ export class Row {
   }
   
   getNewData(): any {
-    let values = Object.assign({}, this.data);
+    let values = Object.assign({}, JSON.parse(JSON.stringify( this.data )));
     this.getCells().forEach((cell) => values[cell.getColumn().id] = cell.newValue);
     return values;
   }
@@ -34,6 +35,11 @@ export class Row {
   setData(data): any {
     this.data = data;
     this.process();
+  }
+
+  setInEditing(status: boolean): void {
+    if (!status) this._localdatasource.refresh();
+    this.isInEditing = status;
   }
 
   protected process(): void {

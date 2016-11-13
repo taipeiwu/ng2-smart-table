@@ -74,7 +74,7 @@ export class Grid {
   }
 
   edit(row: Row): void {
-    row.isInEditing = true;
+    row.setInEditing(true);
   }
   
   create(row: Row, confirmEmitter: EventEmitter<any>): void {
@@ -107,7 +107,7 @@ export class Grid {
     deferred.promise.then((newData) => {
       newData = newData ? newData : row.getNewData();
       this.source.update(row.getData(), newData).then(() => {
-        row.isInEditing = false;
+        row.setInEditing(false);
       })
     }).catch((err) => {
       // doing nothing
