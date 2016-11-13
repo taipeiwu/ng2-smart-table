@@ -1,4 +1,9 @@
 "use strict";
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var local_sorter_1 = require('./local.sorter');
 var local_filter_1 = require('./local.filter');
 var local_pager_1 = require('./local.pager');
@@ -17,7 +22,7 @@ var LocalDataSource = (function (_super) {
             andOperator: true
         };
         this.pagingConf = {};
-        this.load(data);
+        this.data = data;
     }
     LocalDataSource.prototype.load = function (data) {
         this.data = data;

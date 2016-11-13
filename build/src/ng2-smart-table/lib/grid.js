@@ -35,14 +35,7 @@ var Grid = (function () {
         });
     };
     Grid.prototype.getSetting = function (name, defaultValue) {
-        var keys = name.split('.');
-        var level = this.settings;
-        keys.forEach(function (k) {
-            if (level && typeof level[k] !== 'undefined') {
-                level = level[k];
-            }
-        });
-        return typeof level === 'undefined' ? defaultValue : level;
+        return helpers_1.getDeepFromObject(this.settings, name, defaultValue);
     };
     Grid.prototype.getColumns = function () {
         return this.dataSet.getColumns();
@@ -57,7 +50,7 @@ var Grid = (function () {
         return this.onSelectRowSource.asObservable();
     };
     Grid.prototype.edit = function (row) {
-        row.isInEditing = true;
+        row.setInEditing(true);
     };
     Grid.prototype.create = function (row, confirmEmitter) {
         var _this = this;
@@ -88,7 +81,7 @@ var Grid = (function () {
         deferred.promise.then(function (newData) {
             newData = newData ? newData : row.getNewData();
             _this.source.update(row.getData(), newData).then(function () {
-                row.isInEditing = false;
+                row.setInEditing(false);
             });
         }).catch(function (err) {
             // doing nothing

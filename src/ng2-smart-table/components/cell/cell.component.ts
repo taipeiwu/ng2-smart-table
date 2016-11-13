@@ -45,7 +45,7 @@ export class CellComponent {
   @Output() public edited: EventEmitter<any> = new EventEmitter<any>();
 
   onStopEditing(): boolean {
-    this.cell.getRow().isInEditing = false;
+    this.cell.getRow().setInEditing(false);
     return false;
   }
 

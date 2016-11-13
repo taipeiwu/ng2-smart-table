@@ -43,7 +43,7 @@
       </td>
       <td *ngIf="row.isInEditing" class="ng2-smart-actions">
         <a href="#" class="ng2-smart-action ng2-smart-action-edit-save" [innerHTML]="grid.getSetting('edit.saveButtonContent')" (click)="onSave(row, $event)"></a>
-        <a href="#" class="ng2-smart-action ng2-smart-action-edit-cancel" [innerHTML]="grid.getSetting('edit.cancelButtonContent')" (click)="row.isInEditing = false;"></a>
+        <a href="#" class="ng2-smart-action ng2-smart-action-edit-cancel" [innerHTML]="grid.getSetting('edit.cancelButtonContent')" (click)="row.setInEditing(false)"></a>
       </td>
       <td *ngFor="let cell of row.getCells()">
         <ng2-smart-table-cell [cell]="cell" [mode]="grid.getSetting('mode')" [gridmode]="grid.getSetting('mode')" [inputClass]="grid.getSetting('edit.inputClass')" (edited)="onSave(row, $event)"></ng2-smart-table-cell>

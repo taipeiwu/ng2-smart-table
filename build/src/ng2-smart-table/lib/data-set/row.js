@@ -20,13 +20,22 @@ var Row = (function () {
         return this.data;
     };
     Row.prototype.getNewData = function () {
-        var values = {};
+        var values = Object.assign({}, JSON.parse(JSON.stringify(this.data)));
         this.getCells().forEach(function (cell) { return values[cell.getColumn().id] = cell.newValue; });
-        return Object.assign(this.data, values);
+        return values;
     };
     Row.prototype.setData = function (data) {
         this.data = data;
         this.process();
+    };
+    Row.prototype.setInEditing = function (status) {
+        var _this = this;
+        if (!status) {
+            console.log(this.getData());
+            this.getCells().forEach(function (cell) { return cell.newValue = _this.data[cell.getColumn().id]; });
+        }
+        this.isInEditing = status;
+        return false;
     };
     Row.prototype.process = function () {
         var _this = this;

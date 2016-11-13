@@ -1,7 +1,6 @@
 import { Cell } from './cell';
 import { Column } from './column';
 import { DataSet } from './data-set';
-import { LocalDataSource } from '../data-source/local/local.data-source';
 
 export class Row {
 
@@ -9,8 +8,7 @@ export class Row {
   isInEditing: boolean = false;
   protected cells: Array<Cell> = [];
 
-
-  constructor(public index: number, protected data: any, protected _dataSet: DataSet, protected _localdatasource: LocalDataSource) {
+  constructor(public index: number, protected data: any, protected _dataSet: DataSet) {
     this.process();
   }
 
@@ -37,9 +35,14 @@ export class Row {
     this.process();
   }
 
-  setInEditing(status: boolean): void {
-    if (!status) this._localdatasource.refresh();
+  setInEditing(status: boolean): boolean {
+    if (!status) {
+      console.log(this.getData());
+      this.getCells().forEach((cell) => cell.newValue = this.data[cell.getColumn().id]);
+    }
     this.isInEditing = status;
+
+    return false;
   }
 
   protected process(): void {

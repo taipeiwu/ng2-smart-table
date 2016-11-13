@@ -8,7 +8,6 @@ export class Row {
   isInEditing: boolean = false;
   protected cells: Array<Cell> = [];
 
-
   constructor(public index: number, protected data: any, protected _dataSet: DataSet) {
     this.process();
   }
@@ -26,14 +25,24 @@ export class Row {
   }
   
   getNewData(): any {
-    let values = {};
+    let values = Object.assign({}, JSON.parse(JSON.stringify( this.data )));
     this.getCells().forEach((cell) => values[cell.getColumn().id] = cell.newValue);
-    return Object.assign(this.data, values);
+    return values;
   }
 
   setData(data): any {
     this.data = data;
     this.process();
+  }
+
+  setInEditing(status: boolean): boolean {
+    if (!status) {
+      console.log(this.getData());
+      this.getCells().forEach((cell) => cell.newValue = this.data[cell.getColumn().id]);
+    }
+    this.isInEditing = status;
+
+    return false;
   }
 
   protected process(): void {

@@ -4,7 +4,7 @@ import { DataSet } from './data-set/data-set';
 import { DataSource } from './data-source/data-source';
 import { Subject, Observable } from 'rxjs/Rx';
 import { EventEmitter } from '@angular/core';
-import { Deferred } from './helpers';
+import { Deferred, getDeepFromObject } from './helpers';
 
 export class Grid {
 
@@ -54,15 +54,7 @@ export class Grid {
   }
   
   getSetting(name: string, defaultValue?: any): any {
-    let keys = name.split('.');
-    let level = this.settings;
-    keys.forEach((k) => {
-      if (level && typeof level[k] !== 'undefined') {
-        level = level[k];
-      }
-    });
-    
-    return typeof level === 'undefined' ? defaultValue : level;
+    return getDeepFromObject(this.settings, name, defaultValue);
   }
 
   getColumns(): Array<Column> {
@@ -82,7 +74,7 @@ export class Grid {
   }
 
   edit(row: Row): void {
-    row.isInEditing = true;
+    row.setInEditing(true);
   }
   
   create(row: Row, confirmEmitter: EventEmitter<any>): void {
@@ -115,7 +107,7 @@ export class Grid {
     deferred.promise.then((newData) => {
       newData = newData ? newData : row.getNewData();
       this.source.update(row.getData(), newData).then(() => {
-        row.isInEditing = false;
+        row.setInEditing(false);
       })
     }).catch((err) => {
       // doing nothing

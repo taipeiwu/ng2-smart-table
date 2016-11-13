@@ -6,11 +6,11 @@ var LocalFilter = (function () {
         var filter = customFilter ? customFilter : this.FILTER;
         return data.filter(function (el) {
             var value = typeof el[field] === 'undefined' || el[field] === null ? '' : el[field];
-            return filter.call(null, value.toString().toLowerCase(), search.toString().toLowerCase());
+            return filter.call(null, value, search);
         });
     };
     LocalFilter.FILTER = function (value, search) {
-        return value.includes(search);
+        return value.toString().toLowerCase().includes(search.toString().toLowerCase());
     };
     return LocalFilter;
 }());

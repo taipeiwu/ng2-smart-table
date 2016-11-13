@@ -14,3 +14,4 @@ export declare class Deferred {
     reject: any;
     constructor();
 }
+export declare function getDeepFromObject(object: {}, name: string, defaultValue?: any): any;

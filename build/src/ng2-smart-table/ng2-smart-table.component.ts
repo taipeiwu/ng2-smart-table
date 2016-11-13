@@ -161,15 +161,7 @@ export class Ng2SmartTableComponent implements OnChanges {
 
   onSave(row: Row, event): boolean {
     event.stopPropagation();
-
-    if (this.grid.getSetting('mode') === 'ko') {
-      this.edit.emit({
-        data: row.getNewData(),
-        source: this.source
-      });
-    } else {
-      this.grid.save(row, this.editConfirm);
-    }
+    this.grid.save(row, this.editConfirm);
     return false;
   }
 

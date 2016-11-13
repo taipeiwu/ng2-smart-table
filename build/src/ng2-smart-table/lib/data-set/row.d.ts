@@ -14,6 +14,7 @@ export declare class Row {
     getData(): any;
     getNewData(): any;
     setData(data: any): any;
+    setInEditing(status: boolean): boolean;
     protected process(): void;
     protected createCell(column: Column): Cell;
 }

@@ -114,3 +114,17 @@ var Deferred = (function () {
     return Deferred;
 }());
 exports.Deferred = Deferred;
+// getDeepFromObject({result: {data: 1}}, 'result.data', 2); // returns 1
+function getDeepFromObject(object, name, defaultValue) {
+    if (object === void 0) { object = {}; }
+    var keys = name.split('.');
+    // clone the object
+    var level = exports.deepExtend({}, object);
+    keys.forEach(function (k) {
+        if (level && typeof level[k] !== 'undefined') {
+            level = level[k];
+        }
+    });
+    return typeof level === 'undefined' ? defaultValue : level;
+}
+exports.getDeepFromObject = getDeepFromObject;

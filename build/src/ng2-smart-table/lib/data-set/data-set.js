@@ -85,7 +85,7 @@ var DataSet = (function () {
     };
     DataSet.prototype.createNewRow = function () {
         this.newRow = new row_1.Row(0, {}, this);
-        this.newRow.isInEditing = true;
+        this.newRow.setInEditing(true);
     };
     /**
      * Create columns by mapping from the settings
