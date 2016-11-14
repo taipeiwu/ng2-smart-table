@@ -36,7 +36,7 @@ export class Row {
   }
 
   setInEditing(status: boolean): boolean {
-    if (!status) this.getCells().forEach((cell) => cell.newValue = this.data[cell.getColumn().id]);
+    if (this.isInEditing && !status) this.getCells().forEach((cell) => cell.newValue = this.data[cell.getColumn().id]);
     this.isInEditing = status;
 
     return false;

@@ -54,7 +54,16 @@ export class Grid {
   }
   
   getSetting(name: string, defaultValue?: any): any {
-    return getDeepFromObject(this.settings, name, defaultValue);
+    let keys = name.split('.');
+    let level = this.settings;
+    keys.forEach((k) => {
+      if (level && typeof level[k] !== 'undefined') {
+        level = level[k];
+      }
+    });
+    
+    return typeof level === 'undefined' ? defaultValue : level;
+    // return getDeepFromObject(this.settings, name, defaultValue);
   }
 
   getColumns(): Array<Column> {

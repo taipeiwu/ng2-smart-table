@@ -35,7 +35,15 @@ var Grid = (function () {
         });
     };
     Grid.prototype.getSetting = function (name, defaultValue) {
-        return helpers_1.getDeepFromObject(this.settings, name, defaultValue);
+        var keys = name.split('.');
+        var level = this.settings;
+        keys.forEach(function (k) {
+            if (level && typeof level[k] !== 'undefined') {
+                level = level[k];
+            }
+        });
+        return typeof level === 'undefined' ? defaultValue : level;
+        // return getDeepFromObject(this.settings, name, defaultValue);
     };
     Grid.prototype.getColumns = function () {
         return this.dataSet.getColumns();
